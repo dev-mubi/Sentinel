@@ -19,7 +19,7 @@ const VerifyEmailPage = () => {
     setStatus('verifying');
 
     try {
-      const response = await fetch(`http://localhost:5000/api/developers/verify/${token}`);
+      const response = await fetch(`${API_BASE_URL}/api/developers/verify/${token}`);
       const data = await response.json();
 
       if (response.ok) {
@@ -168,7 +168,7 @@ const VerifyEmailPage = () => {
         {status === 'pending' && (
           <p className="text-center text-xs text-dark-500 mt-6">
             Having trouble?{' '}
-            <a href="mailto:support@sentinel.com" className="text-dark-400 hover:text-dark-300 underline">
+            <a href="mailto:mobishahzaib@gmail.com" className="text-dark-400 hover:text-dark-300 underline">
               Contact support
             </a>
           </p>
