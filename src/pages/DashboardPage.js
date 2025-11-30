@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import logo from '../logo.png';
 import API_BASE_URL from '../config';
+import DocsPage from './DocsPage';
 
 const DashboardPage = () => {
   const [developer, setDeveloper] = useState(null);
@@ -430,52 +431,7 @@ const DashboardPage = () => {
 
           {/* Documentation Tab */}
           {activeTab === 'docs' && (
-            <div className="max-w-4xl">
-              <h1 className="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6">Documentation</h1>
-              <div className="bg-dark-800/50 backdrop-blur-sm border border-dark-700 rounded-2xl p-4 md:p-8">
-                <div className="prose prose-invert max-w-none">
-                  <h2 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">Getting Started</h2>
-                  <p className="text-dark-300 mb-4 md:mb-6 text-sm md:text-base">
-                    Sentinel provides a secure and easy-to-use authentication service for your applications. 
-                    Follow this guide to integrate Sentinel into your project.
-                  </p>
-
-                  <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-3">1. Authentication Headers</h3>
-                  <p className="text-dark-300 mb-3 md:mb-4 text-sm md:text-base">
-                    All API requests to Sentinel must include your Client ID and Client Secret in the headers:
-                  </p>
-                  <div className="bg-dark-900 rounded-xl p-3 md:p-4 mb-4 md:mb-6 border border-dark-700 font-mono text-xs md:text-sm text-primary-300 overflow-x-auto">
-                    X-Client-ID: your_client_id<br/>
-                    X-Client-Secret: your_client_secret
-                  </div>
-
-                  <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-3">2. API Endpoints</h3>
-                  <div className="space-y-3 md:space-y-4">
-                    <div className="bg-dark-900 rounded-xl p-3 md:p-4 border border-dark-700">
-                      <div className="flex items-center gap-2 md:gap-3 mb-1 md:mb-2">
-                        <span className="px-2 py-1 bg-green-900/30 text-green-400 text-xs font-bold rounded">POST</span>
-                        <code className="text-white text-sm md:text-base">/api/auth/register</code>
-                      </div>
-                      <p className="text-dark-400 text-xs md:text-sm">Register a new user for your application.</p>
-                    </div>
-                    <div className="bg-dark-900 rounded-xl p-3 md:p-4 border border-dark-700">
-                      <div className="flex items-center gap-2 md:gap-3 mb-1 md:mb-2">
-                        <span className="px-2 py-1 bg-green-900/30 text-green-400 text-xs font-bold rounded">POST</span>
-                        <code className="text-white text-sm md:text-base">/api/auth/login</code>
-                      </div>
-                      <p className="text-dark-400 text-xs md:text-sm">Authenticate an existing user.</p>
-                    </div>
-                    <div className="bg-dark-900 rounded-xl p-3 md:p-4 border border-dark-700">
-                      <div className="flex items-center gap-2 md:gap-3 mb-1 md:mb-2">
-                        <span className="px-2 py-1 bg-green-900/30 text-green-400 text-xs font-bold rounded">POST</span>
-                        <code className="text-white text-sm md:text-base">/api/auth/verify-email</code>
-                      </div>
-                      <p className="text-dark-400 text-xs md:text-sm">Verify a user's email address using the token sent to them.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <DocsPage />
           )}
 
           {/* Settings Tab */}

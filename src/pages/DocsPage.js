@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const DocsPage = () => {
   const [activeSection, setActiveSection] = useState('overview');
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const scrollToSection = (sectionId) => {
     setActiveSection(sectionId);
+    setMobileNavOpen(false);
     const element = document.getElementById(sectionId);
     if (element) {
       const offset = 100;
@@ -19,6 +21,25 @@ const DocsPage = () => {
       });
     }
   };
+
+  // Update active section based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['overview', 'how-it-works', 'quick-start', 'integration', 'api-reference', 'security'];
+      const scrollPosition = window.scrollY + 150;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navItems = [
     { id: 'overview', label: 'Overview' },
@@ -34,35 +55,53 @@ const DocsPage = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8 border-b border-dark-700">
+      <div className="pt-20 md:pt-24 pb-8 md:pb-12 px-4 sm:px-6 lg:px-8 border-b border-dark-700">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-600/10 border border-primary-600/30 rounded-full mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary-600/10 border border-primary-600/30 rounded-full mb-4 md:mb-6">
               <div className="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></div>
               <span className="text-primary-400 text-sm font-medium">Developer Documentation</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
               Integrate Sentinel OAuth in Minutes
             </h1>
-            <p className="text-xl text-dark-300 leading-relaxed">
+            <p className="text-lg md:text-xl text-dark-300 leading-relaxed">
               Add secure authentication to your applications with our OAuth 2.0 provider. No complex setup, just straightforward integration.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        {/* Mobile Navigation Toggle */}
+        <div className="lg:hidden mb-6">
+          <button
+            onClick={() => setMobileNavOpen(!mobileNavOpen)}
+            className="w-full flex items-center justify-between px-4 py-3 bg-dark-800 border border-dark-700 rounded-lg text-white"
+          >
+            <span>Documentation Navigation</span>
+            <svg 
+              className={`w-5 h-5 transition-transform ${mobileNavOpen ? 'rotate-180' : ''}`} 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-6 md:gap-8">
           
           {/* Sidebar Navigation */}
-          <aside className="hidden lg:block w-64 flex-shrink-0">
-            <div className="sticky top-24">
-              <nav className="space-y-1">
+          <aside className={`lg:w-64 lg:flex-shrink-0 ${mobileNavOpen ? 'block' : 'hidden lg:block'}`}>
+            <div className="sticky top-24 bg-dark-800 lg:bg-transparent rounded-xl lg:rounded-none p-4 lg:p-0 border border-dark-700 lg:border-none">
+              <nav className="space-y-1 mb-6 lg:mb-0">
                 {navItems.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                    className={`w-full text-left px-3 md:px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                       activeSection === item.id
                         ? 'bg-primary-600/10 text-primary-400 border-l-2 border-primary-500'
                         : 'text-dark-400 hover:text-dark-200 hover:bg-dark-800/50'
@@ -74,7 +113,7 @@ const DocsPage = () => {
               </nav>
 
               {/* Quick Links */}
-              <div className="mt-8 p-4 bg-dark-800/30 border border-dark-700 rounded-xl">
+              <div className="p-4 bg-dark-800/30 border border-dark-700 rounded-xl">
                 <h3 className="text-sm font-semibold text-white mb-3">Quick Links</h3>
                 <div className="space-y-2">
                   <Link to="/register" className="block text-sm text-primary-400 hover:text-primary-300 transition-colors">
@@ -92,64 +131,64 @@ const DocsPage = () => {
           <main className="flex-1 min-w-0">
             
             {/* Overview Section */}
-            <section id="overview" className="mb-16 scroll-mt-24">
-              <h2 className="text-3xl font-bold text-white mb-6">What is Sentinel?</h2>
+            <section id="overview" className="mb-12 md:mb-16 scroll-mt-20 md:scroll-mt-24">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6">What is Sentinel?</h2>
               <div className="prose prose-invert max-w-none">
-                <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-6 mb-6">
-                  <p className="text-dark-300 leading-relaxed mb-4">
+                <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-4 md:p-6 mb-4 md:mb-6">
+                  <p className="text-dark-300 leading-relaxed mb-3 md:mb-4 text-sm md:text-base">
                     Sentinel is a secure OAuth 2.0 authentication provider designed for developers who want to add user authentication without the complexity of building and maintaining their own auth infrastructure.
                   </p>
-                  <p className="text-dark-300 leading-relaxed">
+                  <p className="text-dark-300 leading-relaxed text-sm md:text-base">
                     Focus on building your application while Sentinel handles passwords, sessions, and security compliance for you.
                   </p>
                 </div>
 
                 {/* Key Features */}
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-5">
-                    <div className="w-10 h-10 bg-primary-600/10 rounded-lg flex items-center justify-center mb-3">
-                      <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+                  <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-4 md:p-5">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-primary-600/10 rounded-lg flex items-center justify-center mb-2 md:mb-3">
+                      <svg className="w-4 h-4 md:w-5 md:h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                       </svg>
                     </div>
-                    <h3 className="text-white font-semibold mb-2">Secure by Default</h3>
-                    <p className="text-dark-400 text-sm">OAuth 2.0 standard with industry best practices built-in.</p>
+                    <h3 className="text-white font-semibold mb-1 md:mb-2 text-sm md:text-base">Secure by Default</h3>
+                    <p className="text-dark-400 text-xs md:text-sm">OAuth 2.0 standard with industry best practices built-in.</p>
                   </div>
-                  <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-5">
-                    <div className="w-10 h-10 bg-primary-600/10 rounded-lg flex items-center justify-center mb-3">
-                      <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-4 md:p-5">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-primary-600/10 rounded-lg flex items-center justify-center mb-2 md:mb-3">
+                      <svg className="w-4 h-4 md:w-5 md:h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
                     </div>
-                    <h3 className="text-white font-semibold mb-2">Quick Setup</h3>
-                    <p className="text-dark-400 text-sm">Get started in minutes with straightforward integration steps.</p>
+                    <h3 className="text-white font-semibold mb-1 md:mb-2 text-sm md:text-base">Quick Setup</h3>
+                    <p className="text-dark-400 text-xs md:text-sm">Get started in minutes with straightforward integration steps.</p>
                   </div>
-                  <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-5">
-                    <div className="w-10 h-10 bg-primary-600/10 rounded-lg flex items-center justify-center mb-3">
-                      <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-4 md:p-5">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-primary-600/10 rounded-lg flex items-center justify-center mb-2 md:mb-3">
+                      <svg className="w-4 h-4 md:w-5 md:h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                       </svg>
                     </div>
-                    <h3 className="text-white font-semibold mb-2">Always Reliable</h3>
-                    <p className="text-dark-400 text-sm">Battle-tested infrastructure for your authentication needs.</p>
+                    <h3 className="text-white font-semibold mb-1 md:mb-2 text-sm md:text-base">Always Reliable</h3>
+                    <p className="text-dark-400 text-xs md:text-sm">Battle-tested infrastructure for your authentication needs.</p>
                   </div>
                 </div>
               </div>
             </section>
 
             {/* How It Works Section */}
-            <section id="how-it-works" className="mb-16 scroll-mt-24">
-              <h2 className="text-3xl font-bold text-white mb-6">How It Works</h2>
-              <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-6 mb-6">
-                <p className="text-dark-300 mb-6">
+            <section id="how-it-works" className="mb-12 md:mb-16 scroll-mt-20 md:scroll-mt-24">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6">How It Works</h2>
+              <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-4 md:p-6 mb-4 md:mb-6">
+                <p className="text-dark-300 mb-4 md:mb-6 text-sm md:text-base">
                   Sentinel implements the OAuth 2.0 Authorization Code flow - the most secure method for web authentication:
                 </p>
                 
                 <div className="relative">
                   {/* Connecting Line */}
-                  <div className="absolute left-4 top-8 bottom-8 w-0.5 bg-dark-700"></div>
+                  <div className="absolute left-3 md:left-4 top-6 md:top-8 bottom-6 md:bottom-8 w-0.5 bg-dark-700"></div>
                   
-                  <div className="space-y-6">
+                  <div className="space-y-4 md:space-y-6">
                     {[
                       {
                         step: 1,
@@ -177,13 +216,13 @@ const DocsPage = () => {
                         description: "Use the access token to fetch user information and maintain authenticated sessions."
                       }
                     ].map((item) => (
-                      <div key={item.step} className="relative flex items-start gap-4 pl-2">
-                        <div className="relative z-10 w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center flex-shrink-0">
-                          <span className="text-white text-sm font-bold">{item.step}</span>
+                      <div key={item.step} className="relative flex items-start gap-3 md:gap-4 pl-2">
+                        <div className="relative z-10 w-6 h-6 md:w-8 md:h-8 rounded-full bg-primary-600 flex items-center justify-center flex-shrink-0">
+                          <span className="text-white text-xs md:text-sm font-bold">{item.step}</span>
                         </div>
-                        <div className="flex-1 pt-1">
-                          <h3 className="text-white font-semibold mb-1">{item.title}</h3>
-                          <p className="text-dark-400 text-sm leading-relaxed">{item.description}</p>
+                        <div className="flex-1 pt-0.5 md:pt-1">
+                          <h3 className="text-white font-semibold mb-1 text-sm md:text-base">{item.title}</h3>
+                          <p className="text-dark-400 text-xs md:text-sm leading-relaxed">{item.description}</p>
                         </div>
                       </div>
                     ))}
@@ -193,19 +232,19 @@ const DocsPage = () => {
             </section>
 
             {/* Quick Start Section */}
-            <section id="quick-start" className="mb-16 scroll-mt-24">
-              <h2 className="text-3xl font-bold text-white mb-6">Quick Start</h2>
+            <section id="quick-start" className="mb-12 md:mb-16 scroll-mt-20 md:scroll-mt-24">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6">Quick Start</h2>
               
-              <div className="space-y-4">
-                <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-6 hover:border-primary-600/30 transition-colors">
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-lg bg-primary-600/10 flex items-center justify-center flex-shrink-0">
-                      <span className="text-primary-400 font-bold">1</span>
+              <div className="space-y-3 md:space-y-4">
+                <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-4 md:p-6 hover:border-primary-600/30 transition-colors">
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-primary-600/10 flex items-center justify-center flex-shrink-0">
+                      <span className="text-primary-400 font-bold text-sm md:text-base">1</span>
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-white mb-2">Register Your Application</h3>
-                      <p className="text-dark-400 text-sm mb-3">Create a developer account and register your application in the dashboard.</p>
-                      <ul className="space-y-1.5 text-sm text-dark-400 ml-4">
+                      <h3 className="text-base md:text-lg font-semibold text-white mb-2">Register Your Application</h3>
+                      <p className="text-dark-400 text-xs md:text-sm mb-2 md:mb-3">Create a developer account and register your application in the dashboard.</p>
+                      <ul className="space-y-1 text-xs md:text-sm text-dark-400 ml-3 md:ml-4">
                         <li className="flex items-center gap-2">
                           <div className="w-1 h-1 bg-primary-500 rounded-full"></div>
                           Sign up for a Sentinel developer account
@@ -223,29 +262,29 @@ const DocsPage = () => {
                   </div>
                 </div>
 
-                <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-6 hover:border-primary-600/30 transition-colors">
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-lg bg-primary-600/10 flex items-center justify-center flex-shrink-0">
-                      <span className="text-primary-400 font-bold">2</span>
+                <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-4 md:p-6 hover:border-primary-600/30 transition-colors">
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-primary-600/10 flex items-center justify-center flex-shrink-0">
+                      <span className="text-primary-400 font-bold text-sm md:text-base">2</span>
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-white mb-2">Configure Redirect URI</h3>
-                      <p className="text-dark-400 text-sm mb-3">Set up the callback URL where users will be redirected after authentication.</p>
-                      <div className="bg-dark-900 rounded-lg p-3 border border-dark-700">
-                        <code className="text-primary-300 text-sm">https://yourdomain.com/auth/callback</code>
+                      <h3 className="text-base md:text-lg font-semibold text-white mb-2">Configure Redirect URI</h3>
+                      <p className="text-dark-400 text-xs md:text-sm mb-2 md:mb-3">Set up the callback URL where users will be redirected after authentication.</p>
+                      <div className="bg-dark-900 rounded-lg p-2 md:p-3 border border-dark-700 overflow-x-auto">
+                        <code className="text-primary-300 text-xs md:text-sm break-all">https://yourdomain.com/auth/callback</code>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-6 hover:border-primary-600/30 transition-colors">
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 rounded-lg bg-primary-600/10 flex items-center justify-center flex-shrink-0">
-                      <span className="text-primary-400 font-bold">3</span>
+                <div className="bg-dark-800/30 border border-dark-700 rounded-xl p-4 md:p-6 hover:border-primary-600/30 transition-colors">
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="w-6 h-6 md:w-8 md:h-8 rounded-lg bg-primary-600/10 flex items-center justify-center flex-shrink-0">
+                      <span className="text-primary-400 font-bold text-sm md:text-base">3</span>
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-white mb-2">Start Integrating</h3>
-                      <p className="text-dark-400 text-sm">You're all set! Follow the integration steps below to implement OAuth in your application.</p>
+                      <h3 className="text-base md:text-lg font-semibold text-white mb-2">Start Integrating</h3>
+                      <p className="text-dark-400 text-xs md:text-sm">You're all set! Follow the integration steps below to implement OAuth in your application.</p>
                     </div>
                   </div>
                 </div>
@@ -253,21 +292,21 @@ const DocsPage = () => {
             </section>
 
             {/* Integration Section */}
-            <section id="integration" className="mb-16 scroll-mt-24">
-              <h2 className="text-3xl font-bold text-white mb-6">Integration Guide</h2>
+            <section id="integration" className="mb-12 md:mb-16 scroll-mt-20 md:scroll-mt-24">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6">Integration Guide</h2>
               
               {/* Step 1: Redirect */}
-              <div className="mb-8">
+              <div className="mb-6 md:mb-8">
                 <div className="bg-dark-800/30 border border-dark-700 rounded-xl overflow-hidden">
-                  <div className="px-6 py-4 border-b border-dark-700 bg-dark-800/50">
-                    <h3 className="text-xl font-semibold text-white">Step 1: Redirect to Sentinel</h3>
+                  <div className="px-4 md:px-6 py-3 md:py-4 border-b border-dark-700 bg-dark-800/50">
+                    <h3 className="text-lg md:text-xl font-semibold text-white">Step 1: Redirect to Sentinel</h3>
                   </div>
-                  <div className="p-6">
-                    <p className="text-dark-300 mb-4">
+                  <div className="p-4 md:p-6">
+                    <p className="text-dark-300 mb-3 md:mb-4 text-sm md:text-base">
                       When a user clicks "Login", redirect them to Sentinel's authorization endpoint with the required parameters.
                     </p>
-                    <div className="bg-dark-900 rounded-lg p-4 border border-dark-700 overflow-x-auto">
-                      <pre className="text-sm text-primary-300 font-mono leading-relaxed">
+                    <div className="bg-dark-900 rounded-lg p-3 md:p-4 border border-dark-700 overflow-x-auto">
+                      <pre className="text-xs md:text-sm text-primary-300 font-mono leading-relaxed whitespace-pre-wrap">
 {`// Example using Express.js
 app.get('/login', (req, res) => {
   const authUrl = \`https://your-sentinel-url.com/api/oauth/authorize?
@@ -280,12 +319,12 @@ app.get('/login', (req, res) => {
 });`}
                       </pre>
                     </div>
-                    <div className="mt-4 flex items-start gap-3 p-4 bg-blue-900/10 border border-blue-900/30 rounded-lg">
-                      <svg className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="mt-3 md:mt-4 flex items-start gap-2 md:gap-3 p-3 md:p-4 bg-blue-900/10 border border-blue-900/30 rounded-lg">
+                      <svg className="w-4 h-4 md:w-5 md:h-5 text-blue-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <p className="text-blue-300 text-sm">
-                        The <code className="text-blue-200 bg-blue-900/30 px-1.5 py-0.5 rounded">state</code> parameter is optional but highly recommended for CSRF protection.
+                      <p className="text-blue-300 text-xs md:text-sm">
+                        The <code className="text-blue-200 bg-blue-900/30 px-1 py-0.5 rounded text-xs">state</code> parameter is optional but highly recommended for CSRF protection.
                       </p>
                     </div>
                   </div>
@@ -293,17 +332,17 @@ app.get('/login', (req, res) => {
               </div>
 
               {/* Step 2: Handle Callback */}
-              <div className="mb-8">
+              <div className="mb-6 md:mb-8">
                 <div className="bg-dark-800/30 border border-dark-700 rounded-xl overflow-hidden">
-                  <div className="px-6 py-4 border-b border-dark-700 bg-dark-800/50">
-                    <h3 className="text-xl font-semibold text-white">Step 2: Handle the Callback</h3>
+                  <div className="px-4 md:px-6 py-3 md:py-4 border-b border-dark-700 bg-dark-800/50">
+                    <h3 className="text-lg md:text-xl font-semibold text-white">Step 2: Handle the Callback</h3>
                   </div>
-                  <div className="p-6">
-                    <p className="text-dark-300 mb-4">
+                  <div className="p-4 md:p-6">
+                    <p className="text-dark-300 mb-3 md:mb-4 text-sm md:text-base">
                       After authentication, Sentinel redirects back with an authorization code. Exchange it for an access token on your backend.
                     </p>
-                    <div className="bg-dark-900 rounded-lg p-4 border border-dark-700 overflow-x-auto">
-                      <pre className="text-sm text-primary-300 font-mono leading-relaxed">
+                    <div className="bg-dark-900 rounded-lg p-3 md:p-4 border border-dark-700 overflow-x-auto">
+                      <pre className="text-xs md:text-sm text-primary-300 font-mono leading-relaxed whitespace-pre-wrap">
 {`app.get('/auth/callback', async (req, res) => {
   const { code } = req.query;
   
@@ -339,17 +378,17 @@ app.get('/login', (req, res) => {
               </div>
 
               {/* Step 3: Fetch User Info */}
-              <div className="mb-8">
+              <div className="mb-6 md:mb-8">
                 <div className="bg-dark-800/30 border border-dark-700 rounded-xl overflow-hidden">
-                  <div className="px-6 py-4 border-b border-dark-700 bg-dark-800/50">
-                    <h3 className="text-xl font-semibold text-white">Step 3: Fetch User Information</h3>
+                  <div className="px-4 md:px-6 py-3 md:py-4 border-b border-dark-700 bg-dark-800/50">
+                    <h3 className="text-lg md:text-xl font-semibold text-white">Step 3: Fetch User Information</h3>
                   </div>
-                  <div className="p-6">
-                    <p className="text-dark-300 mb-4">
+                  <div className="p-4 md:p-6">
+                    <p className="text-dark-300 mb-3 md:mb-4 text-sm md:text-base">
                       Use the access token to retrieve authenticated user information from Sentinel.
                     </p>
-                    <div className="bg-dark-900 rounded-lg p-4 border border-dark-700 overflow-x-auto">
-                      <pre className="text-sm text-primary-300 font-mono leading-relaxed">
+                    <div className="bg-dark-900 rounded-lg p-3 md:p-4 border border-dark-700 overflow-x-auto">
+                      <pre className="text-xs md:text-sm text-primary-300 font-mono leading-relaxed whitespace-pre-wrap">
 {`app.get('/api/user', async (req, res) => {
   const token = req.cookies.auth_token;
   
@@ -370,37 +409,37 @@ app.get('/login', (req, res) => {
             </section>
 
             {/* API Reference Section */}
-            <section id="api-reference" className="mb-16 scroll-mt-24">
-              <h2 className="text-3xl font-bold text-white mb-6">API Reference</h2>
+            <section id="api-reference" className="mb-12 md:mb-16 scroll-mt-20 md:scroll-mt-24">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6">API Reference</h2>
               
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 {/* Authorize Endpoint */}
                 <div className="bg-dark-800/30 border border-dark-700 rounded-xl overflow-hidden">
-                  <div className="px-6 py-4 bg-dark-800/50">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span className="px-3 py-1 bg-blue-900/30 text-blue-400 text-xs font-bold rounded uppercase">GET</span>
-                      <code className="text-white font-mono text-sm">/api/oauth/authorize</code>
+                  <div className="px-4 md:px-6 py-3 md:py-4 bg-dark-800/50">
+                    <div className="flex flex-wrap items-center gap-2 md:gap-3">
+                      <span className="px-2 md:px-3 py-1 bg-blue-900/30 text-blue-400 text-xs font-bold rounded uppercase">GET</span>
+                      <code className="text-white font-mono text-xs md:text-sm break-all">/api/oauth/authorize</code>
                     </div>
                   </div>
-                  <div className="px-6 py-4">
-                    <p className="text-dark-300 text-sm mb-4">Initiates the OAuth 2.0 authorization flow.</p>
-                    <div className="space-y-3">
+                  <div className="px-4 md:px-6 py-3 md:py-4">
+                    <p className="text-dark-300 text-xs md:text-sm mb-3 md:mb-4">Initiates the OAuth 2.0 authorization flow.</p>
+                    <div className="space-y-2 md:space-y-3">
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-2">Query Parameters</h4>
-                        <div className="space-y-2">
+                        <h4 className="text-xs md:text-sm font-semibold text-white mb-1 md:mb-2">Query Parameters</h4>
+                        <div className="space-y-1 md:space-y-2">
                           {[
                             { name: 'client_id', desc: 'Your application client ID', required: true },
                             { name: 'redirect_uri', desc: 'Registered callback URL', required: true },
                             { name: 'response_type', desc: 'Must be "code"', required: true },
                             { name: 'state', desc: 'CSRF protection token', required: false }
                           ].map((param) => (
-                            <div key={param.name} className="flex items-start gap-3 text-sm">
-                              <code className="text-primary-400 bg-primary-900/20 px-2 py-0.5 rounded text-xs font-mono">
+                            <div key={param.name} className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 text-xs md:text-sm">
+                              <code className="text-primary-400 bg-primary-900/20 px-2 py-0.5 rounded text-xs font-mono w-fit">
                                 {param.name}
                               </code>
                               <span className="text-dark-400 flex-1">{param.desc}</span>
                               {param.required && (
-                                <span className="text-red-400 text-xs font-medium">required</span>
+                                <span className="text-red-400 text-xs font-medium w-16">required</span>
                               )}
                             </div>
                           ))}
@@ -412,18 +451,18 @@ app.get('/login', (req, res) => {
 
                 {/* Token Endpoint */}
                 <div className="bg-dark-800/30 border border-dark-700 rounded-xl overflow-hidden">
-                  <div className="px-6 py-4 bg-dark-800/50">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span className="px-3 py-1 bg-green-900/30 text-green-400 text-xs font-bold rounded uppercase">POST</span>
-                      <code className="text-white font-mono text-sm">/api/oauth/token</code>
+                  <div className="px-4 md:px-6 py-3 md:py-4 bg-dark-800/50">
+                    <div className="flex flex-wrap items-center gap-2 md:gap-3">
+                      <span className="px-2 md:px-3 py-1 bg-green-900/30 text-green-400 text-xs font-bold rounded uppercase">POST</span>
+                      <code className="text-white font-mono text-xs md:text-sm break-all">/api/oauth/token</code>
                     </div>
                   </div>
-                  <div className="px-6 py-4">
-                    <p className="text-dark-300 text-sm mb-4">Exchanges authorization code for an access token.</p>
-                    <div className="space-y-3">
+                  <div className="px-4 md:px-6 py-3 md:py-4">
+                    <p className="text-dark-300 text-xs md:text-sm mb-3 md:mb-4">Exchanges authorization code for an access token.</p>
+                    <div className="space-y-2 md:space-y-3">
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-2">Request Body (JSON)</h4>
-                        <div className="space-y-2">
+                        <h4 className="text-xs md:text-sm font-semibold text-white mb-1 md:mb-2">Request Body (JSON)</h4>
+                        <div className="space-y-1 md:space-y-2">
                           {[
                             { name: 'client_id', desc: 'Your client ID' },
                             { name: 'client_secret', desc: 'Your client secret' },
@@ -431,8 +470,8 @@ app.get('/login', (req, res) => {
                             { name: 'grant_type', desc: 'Must be "authorization_code"' },
                             { name: 'redirect_uri', desc: 'Same URI as authorize request' }
                           ].map((param) => (
-                            <div key={param.name} className="flex items-start gap-3 text-sm">
-                              <code className="text-primary-400 bg-primary-900/20 px-2 py-0.5 rounded text-xs font-mono">
+                            <div key={param.name} className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 text-xs md:text-sm">
+                              <code className="text-primary-400 bg-primary-900/20 px-2 py-0.5 rounded text-xs font-mono w-fit">
                                 {param.name}
                               </code>
                               <span className="text-dark-400 flex-1">{param.desc}</span>
@@ -446,19 +485,19 @@ app.get('/login', (req, res) => {
 
                 {/* UserInfo Endpoint */}
                 <div className="bg-dark-800/30 border border-dark-700 rounded-xl overflow-hidden">
-                  <div className="px-6 py-4 bg-dark-800/50">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span className="px-3 py-1 bg-blue-900/30 text-blue-400 text-xs font-bold rounded uppercase">GET</span>
-                      <code className="text-white font-mono text-sm">/api/oauth/userinfo</code>
+                  <div className="px-4 md:px-6 py-3 md:py-4 bg-dark-800/50">
+                    <div className="flex flex-wrap items-center gap-2 md:gap-3">
+                      <span className="px-2 md:px-3 py-1 bg-blue-900/30 text-blue-400 text-xs font-bold rounded uppercase">GET</span>
+                      <code className="text-white font-mono text-xs md:text-sm break-all">/api/oauth/userinfo</code>
                     </div>
                   </div>
-                  <div className="px-6 py-4">
-                    <p className="text-dark-300 text-sm mb-4">Returns authenticated user information.</p>
-                    <div className="space-y-3">
+                  <div className="px-4 md:px-6 py-3 md:py-4">
+                    <p className="text-dark-300 text-xs md:text-sm mb-3 md:mb-4">Returns authenticated user information.</p>
+                    <div className="space-y-2 md:space-y-3">
                       <div>
-                        <h4 className="text-sm font-semibold text-white mb-2">Headers</h4>
-                        <div className="bg-dark-900 rounded-lg p-3 border border-dark-700">
-                          <code className="text-primary-300 text-xs font-mono">
+                        <h4 className="text-xs md:text-sm font-semibold text-white mb-1 md:mb-2">Headers</h4>
+                        <div className="bg-dark-900 rounded-lg p-2 md:p-3 border border-dark-700 overflow-x-auto">
+                          <code className="text-primary-300 text-xs md:text-sm font-mono break-all">
                             Authorization: Bearer {'{access_token}'}
                           </code>
                         </div>
@@ -470,10 +509,10 @@ app.get('/login', (req, res) => {
             </section>
 
             {/* Security Best Practices Section */}
-            <section id="security" className="mb-16 scroll-mt-24">
-              <h2 className="text-3xl font-bold text-white mb-6">Security Best Practices</h2>
+            <section id="security" className="mb-12 md:mb-16 scroll-mt-20 md:scroll-mt-24">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 md:mb-6">Security Best Practices</h2>
               
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 {[
                   {
                     title: "Never Expose Client Secret",
@@ -500,16 +539,16 @@ app.get('/login', (req, res) => {
                     description: "Configure appropriate expiration times for access tokens. Implement token refresh mechanisms for long-lived sessions."
                   }
                 ].map((practice, index) => (
-                  <div key={index} className="bg-dark-800/30 border border-dark-700 rounded-xl p-6 hover:border-primary-600/30 transition-colors">
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-green-900/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div key={index} className="bg-dark-800/30 border border-dark-700 rounded-xl p-4 md:p-6 hover:border-primary-600/30 transition-colors">
+                    <div className="flex items-start gap-3 md:gap-4">
+                      <div className="w-8 h-8 md:w-10 md:h-10 bg-green-900/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <svg className="w-4 h-4 md:w-5 md:h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-white font-semibold mb-2">{practice.title}</h3>
-                        <p className="text-dark-400 text-sm leading-relaxed">{practice.description}</p>
+                        <h3 className="text-white font-semibold mb-1 md:mb-2 text-sm md:text-base">{practice.title}</h3>
+                        <p className="text-dark-400 text-xs md:text-sm leading-relaxed">{practice.description}</p>
                       </div>
                     </div>
                   </div>
@@ -518,25 +557,25 @@ app.get('/login', (req, res) => {
             </section>
 
             {/* CTA Section */}
-            <section className="bg-gradient-to-br from-primary-600/10 to-primary-800/10 border border-primary-600/30 rounded-xl p-8 md:p-12 text-center">
+            <section className="bg-gradient-to-br from-primary-600/10 to-primary-800/10 border border-primary-600/30 rounded-xl p-6 md:p-8 lg:p-12 text-center">
               <div className="max-w-2xl mx-auto">
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Ready to Get Started?</h2>
-                <p className="text-dark-300 mb-8 leading-relaxed">
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-3 md:mb-4">Ready to Get Started?</h2>
+                <p className="text-dark-300 mb-6 md:mb-8 leading-relaxed text-sm md:text-base">
                   Create your developer account and start integrating Sentinel OAuth into your applications today.
                 </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4">
                   <Link 
                     to="/register" 
-                    className="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all shadow-lg shadow-primary-600/20 hover:shadow-primary-600/40"
+                    className="inline-flex items-center px-4 md:px-6 py-2.5 md:py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all shadow-lg shadow-primary-600/20 hover:shadow-primary-600/40 text-sm md:text-base w-full sm:w-auto justify-center"
                   >
                     Create Developer Account
-                    <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 md:w-5 md:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                   </Link>
                   <Link 
                     to="/dashboard" 
-                    className="inline-flex items-center px-6 py-3 bg-dark-800 hover:bg-dark-700 text-white font-semibold rounded-lg transition-all border border-dark-600"
+                    className="inline-flex items-center px-4 md:px-6 py-2.5 md:py-3 bg-dark-800 hover:bg-dark-700 text-white font-semibold rounded-lg transition-all border border-dark-600 text-sm md:text-base w-full sm:w-auto justify-center"
                   >
                     View Dashboard
                   </Link>
