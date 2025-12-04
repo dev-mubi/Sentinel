@@ -32,53 +32,75 @@ const Navbar = () => {
     };
   }, [isMobileMenuOpen]);
 
+  const isActive = (path) => location.pathname === path;
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? 'bg-dark-900/95 backdrop-blur-md shadow-lg border-b border-dark-700' 
-        : 'bg-dark-900/80 backdrop-blur-sm border-b border-dark-800'
+        ? 'bg-dark-900/98 backdrop-blur-lg shadow-2xl border-b border-dark-700/80' 
+        : 'bg-dark-900/95 backdrop-blur-md border-b border-dark-800/50'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+        <div className="flex items-center justify-between h-20">
+          {/* Logo Section */}
           <Link to="/" className="flex items-center space-x-3 group z-50">
-            <img 
-              src={logo} 
-              alt="Sentinel" 
-              className="h-10 w-auto transition-transform group-hover:scale-105"
-            />
-            <span className="text-xl font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
-              Sentinel
-            </span>
+            <div className="relative">
+              <div className="absolute inset-0 bg-primary-600/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <img 
+                src={logo} 
+                alt="Sentinel" 
+                className="relative h-11 w-auto transition-all duration-300 group-hover:scale-105"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl font-bold tracking-tight text-dark-50 group-hover:text-primary-400 transition-colors duration-300">
+                Sentinel
+              </span>
+              <span className="text-xs text-dark-400 font-medium">OAuth 2.0 Provider</span>
+            </div>
           </Link>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-1">
             <a 
               href="/#features" 
-              className="text-dark-300 hover:text-dark-50 transition-colors font-medium"
+              className="px-4 py-2 text-dark-300 hover:text-dark-50 hover:bg-dark-800/50 rounded-lg transition-all duration-200 font-medium text-sm"
             >
               Features
             </a>
             <Link 
-              to="/docs" 
-              className="text-dark-300 hover:text-dark-50 transition-colors font-medium"
+              to="/about" 
+              className={`px-4 py-2 rounded-lg transition-all duration-200 font-medium text-sm ${
+                isActive('/about')
+                  ? 'bg-primary-600/10 text-primary-400 border border-primary-600/20'
+                  : 'text-dark-300 hover:text-dark-50 hover:bg-dark-800/50'
+              }`}
             >
-              Docs
+              About
+            </Link>
+            <Link 
+              to="/docs" 
+              className={`px-4 py-2 rounded-lg transition-all duration-200 font-medium text-sm ${
+                isActive('/docs')
+                  ? 'bg-primary-600/10 text-primary-400 border border-primary-600/20'
+                  : 'text-dark-300 hover:text-dark-50 hover:bg-dark-800/50'
+              }`}
+            >
+              Documentation
             </Link>
           </div>
           
           {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-3">
             <Link 
               to="/login" 
-              className="text-dark-300 hover:text-dark-50 transition-colors font-medium"
+              className="px-5 py-2.5 text-dark-300 hover:text-dark-50 font-medium text-sm transition-all duration-200 hover:bg-dark-800/50 rounded-lg"
             >
               Sign In
             </Link>
             <Link 
               to="/register" 
-              className="px-5 py-2 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all shadow-lg shadow-primary-600/30 hover:shadow-primary-600/50"
+              className="px-5 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg shadow-primary-600/20 hover:shadow-primary-600/40 text-sm"
             >
               Get Started
             </Link>
@@ -87,23 +109,23 @@ const Navbar = () => {
           {/* Mobile Hamburger Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden relative w-10 h-10 flex items-center justify-center text-dark-300 hover:text-white transition-colors z-50"
+            className="md:hidden relative w-10 h-10 flex items-center justify-center text-dark-300 hover:text-white hover:bg-dark-800/50 rounded-lg transition-all duration-200 z-50"
             aria-label="Toggle menu"
           >
-            <div className="w-6 h-5 flex flex-col justify-between">
+            <div className="w-5 h-4 flex flex-col justify-between">
               <span 
-                className={`w-full h-0.5 bg-current transition-all duration-300 ${
-                  isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''
+                className={`w-full h-0.5 bg-current transition-all duration-300 rounded-full ${
+                  isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''
                 }`}
               />
               <span 
-                className={`w-full h-0.5 bg-current transition-all duration-300 ${
+                className={`w-full h-0.5 bg-current transition-all duration-300 rounded-full ${
                   isMobileMenuOpen ? 'opacity-0' : ''
                 }`}
               />
               <span 
-                className={`w-full h-0.5 bg-current transition-all duration-300 ${
-                  isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
+                className={`w-full h-0.5 bg-current transition-all duration-300 rounded-full ${
+                  isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''
                 }`}
               />
             </div>
@@ -113,41 +135,60 @@ const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       <div 
-        className={`md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
           isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setIsMobileMenuOpen(false)}
       />
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Solid Background */}
       <div 
-        className={`md:hidden fixed top-16 right-0 bottom-0 w-64 bg-dark-900/98 backdrop-blur-lg border-l border-dark-700 shadow-2xl transition-transform duration-300 ease-in-out ${
+        className={`md:hidden fixed top-20 right-0 bottom-0 w-72 bg-dark-900 border-l border-dark-700 shadow-2xl transition-transform duration-300 ease-out ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex flex-col p-6 space-y-6 bg-dark-900">
-          <a 
-            href="/#features" 
-            className="text-dark-300 hover:text-white transition-colors font-medium text-lg"
-          >
-            Features
-          </a>
-          <Link 
-            to="/docs" 
-            className="text-dark-300 hover:text-white transition-colors font-medium text-lg"
-          >
-            Docs
-          </Link>
-          <div className="pt-6 border-t border-dark-700 space-y-4">
+        <div className="flex flex-col h-full p-6">
+          {/* Navigation Links */}
+          <nav className="space-y-2 flex-1">
+            <a 
+              href="/#features" 
+              className="block px-4 py-3 text-dark-300 hover:text-white hover:bg-dark-800/50 rounded-lg transition-all font-medium"
+            >
+              Features
+            </a>
+            <Link 
+              to="/about" 
+              className={`block px-4 py-3 rounded-lg transition-all font-medium ${
+                isActive('/about')
+                  ? 'bg-primary-600/10 text-primary-400 border border-primary-600/20'
+                  : 'text-dark-300 hover:text-white hover:bg-dark-800/50'
+              }`}
+            >
+              About
+            </Link>
+            <Link 
+              to="/docs" 
+              className={`block px-4 py-3 rounded-lg transition-all font-medium ${
+                isActive('/docs')
+                  ? 'bg-primary-600/10 text-primary-400 border border-primary-600/20'
+                  : 'text-dark-300 hover:text-white hover:bg-dark-800/50'
+              }`}
+            >
+              Documentation
+            </Link>
+          </nav>
+
+          {/* Auth Buttons */}
+          <div className="pt-6 border-t border-dark-700 space-y-3">
             <Link 
               to="/login" 
-              className="block text-dark-300 hover:text-white transition-colors font-medium text-lg"
+              className="block w-full px-4 py-3 text-center text-dark-300 hover:text-white hover:bg-dark-800/50 font-medium rounded-lg transition-all"
             >
               Sign In
             </Link>
             <Link 
               to="/register" 
-              className="block w-full px-5 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-all shadow-lg shadow-primary-600/30 hover:shadow-primary-600/50 text-center"
+              className="block w-full px-4 py-3 text-center bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-semibold rounded-lg transition-all shadow-lg shadow-primary-600/30 hover:shadow-primary-600/50"
             >
               Get Started
             </Link>

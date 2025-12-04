@@ -7,6 +7,7 @@ import VerifyEmailPage from './pages/VerifyEmailPage';
 import DashboardPage from './pages/DashboardPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import DocsPage from './pages/DocsPage';
+import AboutPage from './pages/AboutPage';
 import OAuthLoginPage from './pages/hosted/OAuthLoginPage';
 import OAuthRegisterPage from './pages/hosted/OAuthRegisterPage';
 import EmailVerificationPage from './pages/hosted/EmailVerificationPage';
@@ -24,6 +25,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/verify" element={<VerifyEmailPage />} />
           <Route path="/docs" element={<DocsPage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           
           {/* Hosted UI Routes */}
