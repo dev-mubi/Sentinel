@@ -42,12 +42,6 @@ const OAuthResetPasswordPage = () => {
     e.preventDefault();
     setError('');
 
-    // Validate client_id is present
-    if (!clientId) {
-      setError('Missing client_id. Please access this page through your application login flow.');
-      return;
-    }
-
     // Validation
     if (newPassword.length < 6) {
       setError('Password must be at least 6 characters long');
@@ -131,6 +125,37 @@ const OAuthResetPasswordPage = () => {
         <div className="bg-dark-800 p-8 rounded-2xl border border-dark-700 text-center max-w-md w-full">
           <div className="text-red-400 text-xl font-bold mb-2">Invalid Request</div>
           <p className="text-dark-400">Email parameter is missing. Please start from the forgot password page.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error screen if client_id is missing
+  if (!clientId) {
+    return (
+      <div className="min-h-screen bg-dark-900 flex flex-col items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <div className="bg-dark-800 border border-red-900/50 rounded-2xl p-8 shadow-xl backdrop-blur-sm">
+            <div className="text-center">
+              <div className="inline-block p-4 rounded-full bg-red-900/20 border border-red-900/50 mb-4">
+                <svg className="w-12 h-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h1 className="text-2xl font-bold text-white mb-2">Invalid Access</h1>
+              <p className="text-dark-300 mb-6">
+                This page must be accessed through your application's password reset flow.
+              </p>
+              <div className="bg-red-900/10 border border-red-900/30 rounded-xl p-4 mb-6">
+                <p className="text-sm text-red-400">
+                  <strong>Error:</strong> Missing client_id parameter
+                </p>
+              </div>
+              <p className="text-dark-400 text-sm">
+                Please return to your application and use the "Forgot Password" link from the login page.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     );
