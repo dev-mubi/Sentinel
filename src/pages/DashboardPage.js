@@ -9,6 +9,7 @@ import MobileHeader from '../components/dashboard/MobileHeader';
 import ApplicationsTab from '../components/dashboard/ApplicationsTab';
 import SettingsTab from '../components/dashboard/SettingsTab';
 import CreateAppModal from '../components/dashboard/CreateAppModal';
+import EditAppModal from '../components/dashboard/EditAppModal';
 import SuccessModal from '../components/dashboard/SuccessModal';
 import ChangePasswordModal from '../components/dashboard/ChangePasswordModal';
 
@@ -18,8 +19,10 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('apps');
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [newApp, setNewApp] = useState({ app_name: '', app_description: '', app_url: '', redirect_uris: '' });
+  const [editedApp, setEditedApp] = useState(null);
   const [createdAppCredentials, setCreatedAppCredentials] = useState(null);
   const [copySuccess, setCopySuccess] = useState('');
   const [error, setError] = useState('');
@@ -96,6 +99,46 @@ const DashboardPage = () => {
       }
     } catch (error) {
       console.error('Error creating app:', error);
+      setError('Network error. Please try again.');
+    }
+  };
+
+  const handleEditApp = (app) => {
+    setEditedApp({ ...app });
+    setShowEditModal(true);
+    setError('');
+  };
+
+  const handleUpdateApp = async (e) => {
+    e.preventDefault();
+    setError('');
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/client-apps/${editedApp.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': token
+        },
+        body: JSON.stringify({
+          app_description: editedApp.app_description,
+          app_url: editedApp.app_url,
+          redirect_uris: editedApp.redirect_uris
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setShowEditModal(false);
+        fetchApps(token);
+        setEditedApp(null);
+      } else {
+        setError(data.error || 'Failed to update application');
+      }
+    } catch (error) {
+      console.error('Error updating app:', error);
       setError('Network error. Please try again.');
     }
   };
@@ -243,6 +286,7 @@ const DashboardPage = () => {
               loading={loading}
               setShowCreateModal={setShowCreateModal}
               handleDeleteApp={handleDeleteApp}
+              handleEditApp={handleEditApp}
               copyToClipboard={copyToClipboard}
               copySuccess={copySuccess}
             />
@@ -274,6 +318,18 @@ const DashboardPage = () => {
         newApp={newApp}
         setNewApp={setNewApp}
         handleSubmit={handleCreateApp}
+        error={error}
+      />
+
+      <EditAppModal
+        showModal={showEditModal}
+        setShowModal={(show) => {
+          setShowEditModal(show);
+          if (!show) setError('');
+        }}
+        editedApp={editedApp}
+        setEditedApp={setEditedApp}
+        handleSubmit={handleUpdateApp}
         error={error}
       />
 
