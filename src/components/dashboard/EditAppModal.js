@@ -10,6 +10,9 @@ const EditAppModal = ({
 }) => {
   if (!showModal || !editedApp) return null;
 
+  const descriptionLength = editedApp.app_description?.length || 0;
+  const isDescriptionTooLong = descriptionLength > 500;
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="bg-dark-800 rounded-2xl border border-dark-700 shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
@@ -33,13 +36,21 @@ const EditAppModal = ({
             <p className="text-xs text-dark-500 mt-1">Application name cannot be changed.</p>
           </div>
           <div>
-            <label className="block text-sm font-medium text-dark-300 mb-1">Description</label>
+            <div className="flex justify-between items-center mb-1">
+              <label className="block text-sm font-medium text-dark-300">Description</label>
+              <span className={`text-xs ${isDescriptionTooLong ? 'text-red-400' : 'text-dark-500'}`}>
+                {descriptionLength}/500
+              </span>
+            </div>
             <textarea
               className="w-full bg-dark-900 border border-dark-600 rounded-xl px-3 md:px-4 py-2 text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all h-20 md:h-24 resize-none text-sm md:text-base"
               placeholder="Brief description of your application..."
               value={editedApp.app_description || ''}
               onChange={(e) => setEditedApp({...editedApp, app_description: e.target.value})}
             />
+            {isDescriptionTooLong && (
+              <p className="text-xs text-red-400 mt-1">Description exceeds 500 character limit</p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-dark-300 mb-1">Application URL</label>
@@ -50,17 +61,18 @@ const EditAppModal = ({
               value={editedApp.app_url || ''}
               onChange={(e) => setEditedApp({...editedApp, app_url: e.target.value})}
             />
+            <p className="text-xs text-dark-500 mt-1">Must be a valid HTTP or HTTPS URL.</p>
           </div>
           <div>
             <label className="block text-sm font-medium text-dark-300 mb-1">Redirect URIs</label>
             <input
               type="text"
               className="w-full bg-dark-900 border border-dark-600 rounded-xl px-3 md:px-4 py-2 text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all text-sm md:text-base"
-              placeholder="http://localhost:3000/callback"
+              placeholder="https://myapp.com/callback, https://myapp.com/auth"
               value={editedApp.redirect_uris || ''}
               onChange={(e) => setEditedApp({...editedApp, redirect_uris: e.target.value})}
             />
-            <p className="text-xs text-dark-500 mt-1">OAuth callback URLs. Separate multiple URIs with commas.</p>
+            <p className="text-xs text-dark-500 mt-1">Separate multiple URIs with commas.</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 mt-6">
             <button
