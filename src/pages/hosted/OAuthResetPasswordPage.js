@@ -42,6 +42,12 @@ const OAuthResetPasswordPage = () => {
     e.preventDefault();
     setError('');
 
+    // Validate client_id is present
+    if (!clientId) {
+      setError('Missing client_id. Please access this page through your application login flow.');
+      return;
+    }
+
     // Validation
     if (newPassword.length < 6) {
       setError('Password must be at least 6 characters long');
@@ -70,7 +76,8 @@ const OAuthResetPasswordPage = () => {
         body: JSON.stringify({
           email,
           otp,
-          newPassword
+          newPassword,
+          client_id: clientId
         })
       });
 

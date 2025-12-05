@@ -19,13 +19,20 @@ const OAuthForgotPasswordPage = () => {
     setError('');
     setLoading(true);
 
+    // Validate client_id is present
+    if (!clientId) {
+      setError('Missing client_id. Please access this page through your application login flow.');
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch(`${API_BASE_URL}/api/hosted-auth/forgot-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email, client_id: clientId })
       });
 
       const data = await response.json();
