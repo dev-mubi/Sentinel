@@ -136,20 +136,20 @@ const Navbar = () => {
       {/* Mobile Menu Overlay */}
       <div 
         className={`md:hidden fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
-          isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          isMobileMenuOpen ? 'opacity-100 z-40' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setIsMobileMenuOpen(false)}
       />
 
-      {/* Mobile Menu - Solid Background */}
+      {/* Mobile Menu - Full Width with Solid Background */}
       <div 
-        className={`md:hidden fixed top-20 right-0 bottom-0 w-72 bg-dark-900 border-l border-dark-700 shadow-2xl transition-transform duration-300 ease-out ${
-          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`md:hidden fixed top-20 left-0 right-0 bg-dark-900 border-b border-dark-700 shadow-2xl transition-all duration-300 ease-out z-40 ${
+          isMobileMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
         }`}
       >
-        <div className="flex flex-col h-full p-6">
+        <div className="flex flex-col p-6">
           {/* Navigation Links */}
-          <nav className="space-y-2 flex-1">
+          <nav className="space-y-2 mb-6">
             <a 
               href="/#features" 
               className="block px-4 py-3 text-dark-300 hover:text-white hover:bg-dark-800/50 rounded-lg transition-all font-medium"

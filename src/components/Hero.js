@@ -13,25 +13,25 @@ const Hero = () => {
       <div className="absolute top-20 left-10 w-72 h-72 bg-primary-600/10 rounded-full blur-3xl animate-pulse"></div>
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
       
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Text Content */}
-          <div className="text-center lg:text-left space-y-8">
+          <div className="text-center lg:text-left space-y-6">
 
             
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
-              Stop Rebuilding
+              OAuth 2.0 Authentication
               <span className="block bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-transparent mt-2">
-                Authentication
+                Built for Developers
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-dark-300 leading-relaxed max-w-2xl">
-              Every app needs authentication, but rebuilding it from scratch wastes time and introduces security risks.
+            <p className="text-lg md:text-xl text-dark-300 leading-relaxed max-w-2xl">
+              Sentinel provides secure OAuth 2.0 authentication with a developer portal to manage your applications and a hosted UI for seamless user experiences.
             </p>
             
-            <p className="text-lg text-dark-400 leading-relaxed max-w-2xl">
-              Sentinel handles user management so you can focus on what makes your app unique.
+            <p className="text-base text-dark-400 leading-relaxed max-w-2xl">
+              Get started in minutes with industry-standard authorization, email verification, and password management—all handled for you.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
@@ -39,7 +39,7 @@ const Hero = () => {
                 to="/register" 
                 className="group px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-semibold rounded-xl transition-all shadow-lg shadow-primary-600/30 hover:shadow-primary-600/50 hover:scale-105 text-lg"
               >
-                Get Started Free
+                Start Building
                 <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
               </Link>
               <a 

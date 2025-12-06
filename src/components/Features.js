@@ -3,61 +3,62 @@ import React from 'react';
 const Features = () => {
   const features = [
     {
-      title: 'User Registration & Login',
-      description: 'Secure user signup and authentication with proper credential validation and session management.',
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-        </svg>
-      ),
-      gradient: 'from-blue-500 to-cyan-500'
-    },
-    {
-      title: 'Password Recovery',
-      description: 'Email-based password reset flows with secure token generation and expiration.',
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-        </svg>
-      ),
-      gradient: 'from-purple-500 to-pink-500'
-    },
-    {
-      title: 'JWT Tokens',
-      description: 'Stateless authentication using JSON Web Tokens for secure API communication.',
+      title: 'OAuth 2.0 Standard',
+      description: 'Industry-standard authorization code flow with secure token exchange and PKCE support.',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
         </svg>
       ),
+      gradient: 'from-blue-500 to-cyan-500'
+    },
+    {
+      title: 'Developer Portal',
+      description: 'Complete dashboard to register and manage up to 2 applications with secure credential generation.',
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      ),
+      gradient: 'from-purple-500 to-pink-500'
+    },
+    {
+      title: 'Hosted UI',
+      description: 'Pre-built, professional login and registration pages for your end-users with seamless redirects.',
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      ),
       gradient: 'from-green-500 to-emerald-500'
     },
     {
-      title: 'Role-Based Access',
-      description: 'Assign roles to users and control permissions based on their access level.',
+      title: 'Email Verification',
+      description: 'Automated email verification workflow with secure OTP delivery via MailerSend integration.',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
       ),
       gradient: 'from-orange-500 to-red-500'
     },
     {
-      title: 'Easy Integration',
-      description: 'Simple REST API that plugs into your app without rebuilding auth from scratch.',
+      title: 'Password Management',
+      description: 'Self-service password recovery and reset flows with app-specific security and email notifications.',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
         </svg>
       ),
       gradient: 'from-yellow-500 to-amber-500'
     },
     {
       title: 'Secure by Default',
-      description: 'Bcrypt password hashing and industry-standard security practices built in.',
+      description: 'Bcrypt password hashing, JWT tokens, and HTTPS-enforced endpoints following industry best practices.',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
         </svg>
       ),
       gradient: 'from-primary-500 to-primary-600'
@@ -79,13 +80,13 @@ const Features = () => {
             <span className="text-primary-400 text-sm font-semibold">Core Features</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Everything You Need
+            Complete OAuth Solution
             <span className="block bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent mt-2">
-              Out of the Box
+              Production Ready
             </span>
           </h2>
           <p className="text-xl text-dark-300 max-w-2xl mx-auto leading-relaxed">
-            A complete authentication solution with all the essentials
+            Everything you need to add secure authentication to your applications
           </p>
         </div>
         
@@ -114,29 +115,7 @@ const Features = () => {
           ))}
         </div>
         
-        {/* CTA Section */}
-        <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary-600/10 via-primary-500/5 to-primary-600/10 blur-3xl"></div>
-          <div className="relative bg-gradient-to-br from-dark-800/80 to-dark-800/40 backdrop-blur-sm border border-dark-700/50 rounded-3xl p-12 text-center overflow-hidden">
-            {/* Decorative corner accents */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-primary-600/10 rounded-br-full"></div>
-            <div className="absolute bottom-0 right-0 w-32 h-32 bg-primary-600/10 rounded-tl-full"></div>
-            
-            <div className="relative">
-              <h3 className="text-3xl md:text-4xl font-bold mb-4">Ready to Get Started?</h3>
-              <p className="text-dark-300 mb-8 text-lg max-w-2xl mx-auto">
-                Free hosting · No OAuth · No MFA · Built for learning
-              </p>
-              <a 
-                href="/register" 
-                className="group inline-block px-10 py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-semibold rounded-xl transition-all shadow-lg shadow-primary-600/30 hover:shadow-primary-600/50 hover:scale-105 text-lg"
-              >
-                Try Sentinel Now
-                <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
-              </a>
-            </div>
-          </div>
-        </div>
+
       </div>
     </section>
   );

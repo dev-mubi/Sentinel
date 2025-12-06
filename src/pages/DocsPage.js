@@ -725,15 +725,14 @@ app.get('/auth/callback', async (req, res) => {
                       </svg>
                       Go to Dashboard
                     </Link>
-                    <Link 
-                      to="/support" 
-                      className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
+                    <a 
+href='mailto:mobishahzaib@gmail.com'                      className="inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm"
                     >
                       Contact Support
                       <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
-                    </Link>
+                    </a>
                   </div>
                 </div>
                 
