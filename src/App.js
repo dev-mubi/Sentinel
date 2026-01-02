@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
@@ -35,6 +36,7 @@ function App() {
           <Route path="/oauth/forgot-password" element={<OAuthForgotPasswordPage />} />
           <Route path="/oauth/reset-password" element={<OAuthResetPasswordPage />} />
         </Routes>
+        <Analytics />
       </div>
     </Router>
   );
