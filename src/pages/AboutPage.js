@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaUserTie, FaUserGraduate, FaLinkedin } from 'react-icons/fa';
 import Navbar from '../components/Navbar';
+import DiscontinuedNotice from '../components/DiscontinuedNotice';
 import Footer from '../components/Footer';
 
 const AboutPage = () => {
@@ -29,8 +30,9 @@ const AboutPage = () => {
   return (
     <div className="min-h-screen bg-dark-900">
       <Navbar />
+      <DiscontinuedNotice offsetClass="top-20" />
       
-      {/* Page Header */}
+      {/* Page Header */}}}
       <section className="relative pt-24 pb-16 border-b border-dark-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">

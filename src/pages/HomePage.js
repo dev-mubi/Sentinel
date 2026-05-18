@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
+import DiscontinuedNotice from '../components/DiscontinuedNotice';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
 import HowItWorks from '../components/HowItWorks';
@@ -11,6 +12,7 @@ const HomePage = () => {
   return (
     <div className="homepage">
       <Navbar />
+      <DiscontinuedNotice offsetClass="top-20" />
       <Hero />
       <Features />
       <HowItWorks />

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import logo from '../logo.png';
 import API_BASE_URL from '../config';
+import DiscontinuedNotice from '../components/DiscontinuedNotice';
 
 const VerifyEmailPage = () => {
   const [searchParams] = useSearchParams();
@@ -36,7 +37,9 @@ const VerifyEmailPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 flex items-center justify-center px-4">
+    <>
+      <DiscontinuedNotice />
+      <div className="min-h-screen bg-dark-900 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -175,6 +178,7 @@ const VerifyEmailPage = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../logo.png';
 import API_BASE_URL from '../config';
+import DiscontinuedNotice from '../components/DiscontinuedNotice';
 
 const ForgotPasswordPage = () => {
   const [step, setStep] = useState(1); // 1: Email, 2: OTP & New Password
@@ -75,7 +76,9 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
+    <>
+      <DiscontinuedNotice />
+      <div className="min-h-screen bg-dark-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-600/20 rounded-full blur-[120px] animate-pulse"></div>
@@ -278,6 +281,7 @@ const ForgotPasswordPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

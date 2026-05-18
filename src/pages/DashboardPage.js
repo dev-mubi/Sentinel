@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../config';
-import DocsPage from './DocsPage';
 
 // Dashboard Components
 import Sidebar from '../components/dashboard/Sidebar';

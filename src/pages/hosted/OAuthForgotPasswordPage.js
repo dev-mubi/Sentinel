@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import logo from '../../logo.png';
 import API_BASE_URL from '../../config';
+import DiscontinuedNotice from '../../components/DiscontinuedNotice';
 
 const OAuthForgotPasswordPage = () => {
   const [searchParams] = useSearchParams();
@@ -115,7 +116,9 @@ const OAuthForgotPasswordPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-dark-900 flex flex-col items-center justify-center p-4">
+    <>
+      <DiscontinuedNotice />
+      <div className="min-h-screen bg-dark-900 flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="inline-block p-4 rounded-full bg-dark-800 border border-dark-700 mb-4 relative group">
@@ -179,8 +182,7 @@ const OAuthForgotPasswordPage = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>    </>  );
 };
 
 export default OAuthForgotPasswordPage;
